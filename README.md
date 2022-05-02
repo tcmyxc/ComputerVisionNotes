@@ -18,9 +18,6 @@ torchvision 0.12.0
 
 ## 图像分类
 
-- LeNet
-  - 网络结构讲解
-  - PyTorch代码实现
 - AlexNet
 - VggNet
 - GoogLeNet
@@ -35,6 +32,7 @@ torchvision 0.12.0
 
 ## 目标检测
 
+- R-CNN
 - Faster RCNN/FPN
 - SSD
 - RetinaNet 
@@ -44,5 +42,4 @@ torchvision 0.12.0
 
 - FCN 
 - DeepLabV3
-- LR-ASPP
 - U-Net 
