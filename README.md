@@ -8,10 +8,21 @@
 # 所需环境
 
 ```tex
-miniconda（创建虚拟环境）
+miniconda 或者 venv（创建虚拟环境）
 python 3.7+
 pytorch 1.11.0
 torchvision 0.12.0
+```
+
+导出依赖到文件
+
+```bash
+python3 -m pip freeze > requirements.txt
+```
+
+从文件安装依赖
+```bash
+pip install -r requirements.txt
 ```
 
 # 目录
