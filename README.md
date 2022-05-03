@@ -20,8 +20,10 @@ torchvision 0.12.0
 
 - AlexNet
   - [沐神的论文讲解](https://www.bilibili.com/video/BV1ih411J7Kz)
-  - [视频地址](https://www.bilibili.com/video/BV1aY4y1k767)
+  - [源码讲解](https://www.bilibili.com/video/BV1aY4y1k767)
 - VggNet
+  - [论文讲解]()
+  - [源码讲解]()
 - GoogLeNet
 - ResNet
 - ResNeXt
@@ -29,6 +31,8 @@ torchvision 0.12.0
 - ShuffleNet_V1、V2
 - EfficientNet_V1、V2 
 - Vision Transformer
+  - [李沐&朱毅老师联合投稿的论文讲解](https://www.bilibili.com/video/BV15P4y137jb)
+  - [源码讲解]()
 - Swin Transformer
 - ConvNeXt
 
