@@ -1,7 +1,17 @@
+from typing import Any
+
 import torch
 import torch.nn as nn
 
-__all__ = ["alexnet"]
+from torchvision._internally_replaced_utils import load_state_dict_from_url
+
+
+__all__ = ["AlexNet", "alexnet"]
+
+
+model_urls = {
+    "alexnet": "https://download.pytorch.org/models/alexnet-owt-7be5be79.pth",
+}
 
 
 class AlexNet(nn.Module):
@@ -41,12 +51,17 @@ class AlexNet(nn.Module):
         return x
 
 
-def alexnet(num_classes: int = 1000, dropout: float = 0.5) -> AlexNet:
-    """AlexNet model architecture from the `ImageNet Classification with Deep Convolutional Neural Networks
-    <https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html>`__ paper.
+def alexnet(pretrained: bool = False, progress: bool = True, **kwargs: Any) -> AlexNet:
+    r"""AlexNet model architecture from the
+    `"One weird trick..." <https://arxiv.org/abs/1404.5997>`_ paper.
     The required minimum input size of the model is 63x63.
+
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        progress (bool): If True, displays a progress bar of the download to stderr
     """
-
-    model = AlexNet(num_classes, dropout)
-
+    model = AlexNet(**kwargs)
+    if pretrained:
+        state_dict = load_state_dict_from_url(model_urls["alexnet"], progress=progress)
+        model.load_state_dict(state_dict)
     return model
