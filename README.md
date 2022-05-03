@@ -19,6 +19,8 @@ torchvision 0.12.0
 ## 图像分类
 
 - AlexNet
+  - [沐神的论文讲解](https://www.bilibili.com/video/BV1ih411J7Kz)
+  - [视频地址](https://www.bilibili.com/video/BV1aY4y1k767)
 - VggNet
 - GoogLeNet
 - ResNet
