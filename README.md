@@ -30,11 +30,13 @@ pip install -r requirements.txt
 ## 图像分类
 
 - AlexNet
+  - [论文地址](https://arxiv.org/abs/1404.5997)
   - [沐神的论文讲解](https://www.bilibili.com/video/BV1ih411J7Kz)
   - [源码讲解](https://www.bilibili.com/video/BV1aY4y1k767)
 - VggNet
-  - [论文讲解]()
-  - [源码讲解]()
+  - [论文地址](https://arxiv.org/abs/1409.1556)
+  - [论文讲解](https://www.bilibili.com/video/BV1PB4y117Yh/)
+  - [源码讲解 TODO]()
 - GoogLeNet
 - ResNet
 - ResNeXt
@@ -42,8 +44,9 @@ pip install -r requirements.txt
 - ShuffleNet_V1、V2
 - EfficientNet_V1、V2 
 - Vision Transformer
+  - [论文地址](https://arxiv.org/abs/2010.11929)
   - [李沐&朱毅老师联合投稿的论文讲解](https://www.bilibili.com/video/BV15P4y137jb)
-  - [源码讲解]()
+  - [源码讲解 TODO]()
 - Swin Transformer
 - ConvNeXt
 
