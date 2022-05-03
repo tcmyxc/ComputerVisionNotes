@@ -3,15 +3,8 @@ from typing import Any
 import torch
 import torch.nn as nn
 
-from torchvision._internally_replaced_utils import load_state_dict_from_url
-
 
 __all__ = ["AlexNet", "alexnet"]
-
-
-model_urls = {
-    "alexnet": "https://download.pytorch.org/models/alexnet-owt-7be5be79.pth",
-}
 
 
 class AlexNet(nn.Module):
@@ -51,17 +44,15 @@ class AlexNet(nn.Module):
         return x
 
 
-def alexnet(pretrained: bool = False, progress: bool = True, **kwargs: Any) -> AlexNet:
+def alexnet(num_classes: int = 1000, dropout: float = 0.5) -> AlexNet:
     r"""AlexNet model architecture from the
     `"One weird trick..." <https://arxiv.org/abs/1404.5997>`_ paper.
     The required minimum input size of the model is 63x63.
-
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-        progress (bool): If True, displays a progress bar of the download to stderr
     """
-    model = AlexNet(**kwargs)
-    if pretrained:
-        state_dict = load_state_dict_from_url(model_urls["alexnet"], progress=progress)
-        model.load_state_dict(state_dict)
+    model = AlexNet(num_classes, dropout)
     return model
+
+
+if __name__ == '__main__':
+    model = alexnet()
+    print(model)
