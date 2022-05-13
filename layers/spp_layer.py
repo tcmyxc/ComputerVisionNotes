@@ -11,7 +11,7 @@ import torch
 import torch.nn as nn
 
 
-def spatial_pyramid_pooling(previous_conv, out_pool_size):
+def spatial_pyramid_pooling(previous_conv, out_pool_size=(1, 2, 4)):
     """
     spatial pyramid pooling
 
