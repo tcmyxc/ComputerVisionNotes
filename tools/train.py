@@ -6,8 +6,6 @@ from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import ToTensor
 
-import sys
-sys.path.append("/nfs/xwx/DL-digital-image-processing")
 from models.vgg import vgg16
 from models.vgg_spp import vgg16 as vgg_spp16
 

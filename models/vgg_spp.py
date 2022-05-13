@@ -3,9 +3,6 @@ from typing import Union, List, Dict, Any, cast
 import torch
 import torch.nn as nn
 
-import sys
-sys.path.append("/nfs/xwx/DL-digital-image-processing")
-
 from layers.spp_layer import spatial_pyramid_pooling
 
 
