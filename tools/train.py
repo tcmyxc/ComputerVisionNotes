@@ -51,7 +51,7 @@ def train(dataloader, model, loss_fn, optimizer, device, print_step=10):
     
     train_loss /= num_batches
     correct /= size
-    logger.info(f"[INFO] Train Error: Accuracy: {(100*correct):>0.1f}%, Avg loss: {train_loss:>8f} \n")
+    logger.info(f"[INFO] Train Error: Accuracy: {(100*correct):>0.2f}%, Avg loss: {train_loss:>8f} \n")
 
 
 def test(dataloader, model, loss_fn, cfg, device, print_step=10):
@@ -85,7 +85,7 @@ def test(dataloader, model, loss_fn, cfg, device, print_step=10):
         }
         update_best_model("./", cfg, model_state, model_name)
     
-    logger.info(f"Test Error: Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+    logger.info(f"Test Error: Accuracy: {(100*correct):>0.2f}%, Avg loss: {test_loss:>8f} \n")
 
 
 def update_best_model(result_path, cfg, model_state, model_name):
@@ -136,7 +136,8 @@ def main():
     train_dataloader = DataLoader(training_data, batch_size=batch_size)
     test_dataloader = DataLoader(test_data, batch_size=batch_size)
 
-    model = vgg16().to(device)
+    # model = vgg16().to(device)  # 79.18
+    model = vgg_spp16().to(device)
 
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=5e-4)
