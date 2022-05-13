@@ -51,7 +51,7 @@ def train(dataloader, model, loss_fn, optimizer, device, print_step=10):
     
     train_loss /= num_batches
     correct /= size
-    logger.info(f"[INFO] Train Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {train_loss:>8f} \n")
+    logger.info(f"[INFO] Train Error: Accuracy: {(100*correct):>0.1f}%, Avg loss: {train_loss:>8f} \n")
 
 
 def test(dataloader, model, loss_fn, cfg, device, print_step=10):
@@ -85,7 +85,7 @@ def test(dataloader, model, loss_fn, cfg, device, print_step=10):
         }
         update_best_model("./", cfg, model_state, model_name)
     
-    logger.info(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+    logger.info(f"Test Error: Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
 
 
 def update_best_model(result_path, cfg, model_state, model_name):
@@ -114,18 +114,18 @@ def main():
     logger.info(f"[INFO] using {device} device")
 
     # Download training data from open datasets.
-    training_data = datasets.STL10(
+    training_data = datasets.CIFAR10(
         root="data",
-        split="train",
+        train=True,
         download=True,
         transform=ToTensor(),
     )
 
     # Download test data from open datasets.
-    test_data = datasets.STL10(
+    test_data = datasets.CIFAR10(
         root="data",
-        split="test",
-        download=True,
+        train=False,
+        download=False,
         transform=ToTensor(),
     )
 
@@ -143,7 +143,9 @@ def main():
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer=optimizer, T_max=epochs)
 
     for epoch in range(epochs):
-        logger.info(f"{'-' * 20} epoch {epoch} {'-' * 20}")
+        logger.info(f"{'-' * 20} epoch {epoch+1} {'-' * 20}")
+        cur_lr = float(optimizer.state_dict()['param_groups'][0]['lr'])
+        logger.info(f"[INFO] lr is: {cur_lr}")
         train(train_dataloader, model, loss_fn, optimizer, device)
         test(test_dataloader, model, loss_fn, cfg, device)
         scheduler.step()
