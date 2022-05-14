@@ -36,9 +36,12 @@ pip install -r requirements.txt
 - VggNet
   - [论文地址](https://arxiv.org/abs/1409.1556)
   - [论文讲解](https://www.bilibili.com/video/BV1PB4y117Yh/)
-  - [源码讲解 TODO]()
-- GoogLeNet
+  - [源码讲解](https://www.bilibili.com/video/BV1wU4y1m7zo/)
 - ResNet
+  - [论文地址](https://arxiv.org/pdf/1512.03385.pdf)
+  - 沐神的论文讲解
+  - 源码讲解
+
 - ResNeXt
 - MobileNet_V1、V2、V3
 - ShuffleNet_V1、V2
@@ -53,7 +56,18 @@ pip install -r requirements.txt
 ## 目标检测
 
 - R-CNN
-- Faster RCNN/FPN
+  - 论文地址
+  - 视频讲解
+
+- SPP-net
+  - 论文地址
+  - 视频讲解
+
+- Fast R-CNN
+  - 论文地址
+  - 视频讲解
+
+- Faster RCNN
 - SSD
 - RetinaNet 
 - YOLO系列
