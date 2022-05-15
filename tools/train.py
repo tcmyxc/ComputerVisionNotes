@@ -102,7 +102,12 @@ def test(dataloader, model, loss_fn, cfg, device, print_step=10):
 
 
 def update_best_model(cfg, model_state, model_name):
-    """更新权重文件"""
+    r"""
+    更新权重文件
+
+    Args:
+        cfg: must have `result_path` and `best_model_path` attributes
+    """
     cp_path = os.path.join(cfg.result_path, model_name)
 
     if cfg.best_model_path is not None:
