@@ -13,6 +13,7 @@ from models.vgg_spp import vgg16 as vgg_spp16
 
 from utils.general import init_seeds, draw_lr, draw_acc_and_loss, get_current_time
 from utils.logger import Logger
+from dataloaders import stl10
 import datetime
 import argparse
 
@@ -137,31 +138,16 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     logger.info(f"[INFO] using {device} device")
 
-    # Download training data from open datasets.
-    training_data = datasets.CIFAR10(
-        root="data",
-        train=True,
-        download=True,
-        transform=ToTensor(),
-    )
-
-    # Download test data from open datasets.
-    test_data = datasets.CIFAR10(
-        root="data",
-        train=False,
-        download=False,
-        transform=ToTensor(),
-    )
 
     batch_size = 128
     epochs = 200
 
     # Create data loaders.
-    train_dataloader = DataLoader(training_data, batch_size=batch_size)
-    test_dataloader = DataLoader(test_data, batch_size=batch_size)
+    train_dataloader = stl10.get(batch_size, "data", True, False)
+    test_dataloader = stl10.get(batch_size, "data", False, True)
 
-    # model = vgg16().to(device)  # 79.18
-    model = vgg_spp16().to(device)  # [1, 2, 4]==>79.29, 79.76%, [1, 2, 4, 5]==>78.54, [1, 2, 3, 4]==>79.12%
+    model = vgg16().to(device)  # 79.18
+    # model = vgg_spp16().to(device)  # [1, 2, 4]==>79.29, 79.76%, [1, 2, 4, 5]==>78.54, [1, 2, 3, 4]==>79.12%
 
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=5e-4)
@@ -172,7 +158,7 @@ def main():
         cur_lr = float(optimizer.state_dict()['param_groups'][0]['lr'])
         cfg.lr_list.append(cur_lr)
         logger.info(f"[INFO] lr is: {cur_lr}")
-        train(train_dataloader, model, loss_fn, optimizer, cfg, device, 100)
+        train(train_dataloader, model, loss_fn, optimizer, cfg, device, 10)
         test(test_dataloader, model, loss_fn, cfg, device)
         scheduler.step()
 
