@@ -1,6 +1,7 @@
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
+
 def get10(batch_size, data_root='data', train=True, val=True, **kwargs):
     ds = []
     if train:
@@ -28,6 +29,7 @@ def get10(batch_size, data_root='data', train=True, val=True, **kwargs):
         ds.append(test_loader)
     ds = ds[0] if len(ds) == 1 else ds
     return ds
+
 
 def get100(batch_size, data_root='data', train=True, val=True, **kwargs):
     ds = []
