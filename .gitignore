@@ -4,3 +4,5 @@ venv/
 logs/
 data/
 __pycache__/
+work_dir/
+*.pth

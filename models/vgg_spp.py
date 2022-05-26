@@ -49,7 +49,7 @@ class VGG(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.features(x)
-        x = spatial_pyramid_pooling(x)
+        x = spatial_pyramid_pooling(x, (1, 2, 4))
         x = self.classifier(x)
         return x
 
