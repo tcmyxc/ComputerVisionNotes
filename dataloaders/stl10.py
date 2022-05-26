@@ -2,7 +2,7 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
 
-def get(batch_size, data_root='/nfs/xwx/DL-digital-image-processing/data', train=True, val=False, **kwargs):
+def get(batch_size, data_root='/nfs/xwx/DL-digital-image-processing/data', train=True, val=True, **kwargs):
     ds = []
     if train:
         train_loader = DataLoader(
