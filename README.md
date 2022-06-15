@@ -39,9 +39,8 @@ pip install -r requirements.txt
   - [源码讲解](https://www.bilibili.com/video/BV1wU4y1m7zo/)
 - ResNet
   - [论文地址](https://arxiv.org/pdf/1512.03385.pdf)
-  - 沐神的论文讲解
+  - [沐神的论文讲解](https://www.bilibili.com/video/BV1Fb4y1h73E)
   - 源码讲解
-
 - ResNeXt
 - MobileNet_V1、V2、V3
 - ShuffleNet_V1、V2
@@ -57,15 +56,15 @@ pip install -r requirements.txt
 
 - R-CNN
   - 论文地址
-  - 视频讲解
+  - [视频讲解](https://www.bilibili.com/video/BV1iY4y1z78q)
 
 - SPP-net
   - 论文地址
-  - 视频讲解
+  - [视频讲解](https://www.bilibili.com/video/BV1vB4y19712)
 
 - Fast R-CNN
   - 论文地址
-  - 视频讲解
+  - [视频讲解](https://www.bilibili.com/video/BV1Z3411A7u6)
 
 - Faster RCNN
 - SSD
