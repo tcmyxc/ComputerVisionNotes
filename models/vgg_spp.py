@@ -147,6 +147,7 @@ def vgg19_bn(**kwargs: Any) -> VGG:
     """
     return _vgg("E", True, **kwargs)
 
+
 if __name__ == '__main__':
     from torchsummary import summary
     model = vgg16().cuda()
