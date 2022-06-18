@@ -127,7 +127,7 @@ class Bottleneck(nn.Module):
         self.conv3 = conv1x1(width, planes * self.expansion)  # 通道数变为原来的四倍
         self.bn3 = norm_layer(planes * self.expansion)
         self.relu = nn.ReLU(inplace=True)
-        self.downsample = downsample
+        self.downsample = downsample  # 输入输出维度不一样时发挥作用，把维度变一致
         self.stride = stride
 
     def forward(self, x: Tensor) -> Tensor:
@@ -234,12 +234,13 @@ class ResNet(nn.Module):
             )
 
         layers = []
+        # 模块第一层
         layers.append(
             block(
                 self.inplanes, planes, stride, downsample, self.groups, self.base_width, previous_dilation, norm_layer
             )
         )
-        self.inplanes = planes * block.expansion
+        self.inplanes = planes * block.expansion  # 64->256->512->1024->2048
 
         # 构造剩下的块，这些块不会下采样
         # 可以看到，只有第一层用到了步长这个参数(因为只有第一层用到了下采样)
@@ -370,5 +371,6 @@ def wide_resnet101_2(**kwargs: Any) -> ResNet:
 
 if __name__ == '__main__':
     from torchsummary import summary
-    model = resnet50()
+    model = resnext50_32x4d()
+    print(model)
     print(summary(model, (3, 224, 224)))
