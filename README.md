@@ -14,6 +14,9 @@ torchvision 0.12.0
 
 ```bash
 python3 -m pip freeze > requirements.txt
+
+# 或者
+pipreqs . --encoding=utf8 --force
 ```
 
 从文件安装依赖
