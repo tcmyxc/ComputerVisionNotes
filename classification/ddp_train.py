@@ -7,7 +7,7 @@ import torch
 import torch.utils.data
 from torch import nn
 
-from . import utils
+import util
 
 LOCAL_RANK = int(os.getenv('LOCAL_RANK', -1))  # https://pytorch.org/docs/stable/elastic/run.html
 RANK = int(os.getenv('RANK', -1))
@@ -15,9 +15,9 @@ WORLD_SIZE = int(os.getenv('WORLD_SIZE', 1))
 
 def train_one_epoch(model, criterion, optimizer, data_loader, device, epoch, args, scaler=None):
     model.train()
-    metric_logger = utils.MetricLogger(delimiter="  ")
-    metric_logger.add_meter("lr", utils.SmoothedValue(window_size=1, fmt="{value:.4f}"))
-    metric_logger.add_meter("img/s", utils.SmoothedValue(window_size=10, fmt="{value:8.2f}"))
+    metric_logger = util.MetricLogger(delimiter="  ")
+    metric_logger.add_meter("lr", util.SmoothedValue(window_size=1, fmt="{value:.4f}"))
+    metric_logger.add_meter("img/s", util.SmoothedValue(window_size=10, fmt="{value:8.2f}"))
 
     header = f"Epoch: [{epoch}]"
     for i, (image, target) in enumerate(metric_logger.log_every(data_loader, args.print_freq, header)):
@@ -37,7 +37,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, device, epoch, arg
             loss.backward()
             optimizer.step()
 
-        acc1, acc5 = utils.accuracy(output, target, topk=(1, 5))  # 计算指标
+        acc1, acc5 = util.accuracy(output, target, topk=(1, 5))  # 计算指标
         batch_size = image.shape[0]
         metric_logger.update(loss=loss.item(), lr=optimizer.param_groups[0]["lr"])
         metric_logger.meters["acc1"].update(acc1.item(), n=batch_size)
@@ -47,7 +47,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, device, epoch, arg
 
 def evaluate(model, criterion, data_loader, device, print_freq=100, log_suffix=""):
     model.eval()
-    metric_logger = utils.MetricLogger(delimiter="  ")
+    metric_logger = util.MetricLogger(delimiter="  ")
     header = f"Test: {log_suffix}"
 
     num_processed_samples = 0
@@ -58,7 +58,7 @@ def evaluate(model, criterion, data_loader, device, print_freq=100, log_suffix="
             output = model(image)
             loss = criterion(output, target)
 
-            acc1, acc5 = utils.accuracy(output, target, topk=(1, 5))
+            acc1, acc5 = util.accuracy(output, target, topk=(1, 5))
             # FIXME need to take into account that the datasets
             # could have been padded in distributed setup
             batch_size = image.shape[0]
@@ -68,7 +68,7 @@ def evaluate(model, criterion, data_loader, device, print_freq=100, log_suffix="
             num_processed_samples += batch_size
     # gather the stats from all processes
 
-    num_processed_samples = utils.reduce_across_processes(num_processed_samples)
+    num_processed_samples = util.reduce_across_processes(num_processed_samples)
     if (
             hasattr(data_loader.dataset, "__len__")
             and len(data_loader.dataset) != num_processed_samples
@@ -97,7 +97,7 @@ def get_dataset(args):
 
 
 def load_data(args):
-    train_dataset, test_dataset = get_dataset()
+    train_dataset, test_dataset = get_dataset(args)
 
     print("Creating data loaders")
     if args.distributed:
@@ -111,17 +111,17 @@ def load_data(args):
 
 
 def main(args):
-    utils.init_seeds()  # 固定种子
+    util.init_seeds()  # 固定种子
 
     # 初始化各进程环境
-    utils.init_distributed_mode(args)
+    util.init_distributed_mode(args)
 
     # 创建输出结果路径
     if args.output_dir:
-        utils.mkdir(args.output_dir)
+        util.mkdir(args.output_dir)
 
     args.lr *= args.world_size  # 学习率要根据并行GPU的数量进行倍增
-    print(args)
+    util.print_args(args)
 
     device = torch.device(args.device)
 
@@ -256,10 +256,10 @@ def main(args):
                 # 保存最好的模型文件
                 if is_best:
                     print(f"\n[FEAT] best model, acc: {best_acc:.2f}")
-                    utils.save_on_master(checkpoint, os.path.join(args.output_dir, "best_model.pth"))
+                    util.save_on_master(checkpoint, os.path.join(args.output_dir, "best_model.pth"))
 
                 # 保存最新的模型文件
-                utils.save_on_master(checkpoint, os.path.join(args.output_dir, "latest.pth"))
+                util.save_on_master(checkpoint, os.path.join(args.output_dir, "latest.pth"))
 
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))

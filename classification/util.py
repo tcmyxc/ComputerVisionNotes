@@ -485,3 +485,13 @@ def init_seeds(seed=0):
     torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed) # if you are using multi-GPU
     cudnn.benchmark, cudnn.deterministic = (False, True) if seed == 0 else (True, False)
+
+
+def print_args(args):
+    """优雅地打印命令行参数"""
+
+    print("")
+    print("-" * 20, "args", "-" * 20)
+    for k, v in vars(args).items():
+        print(f"{k}: {v}")
+    print("-" * 18, "args end", "-" * 18, flush=True)
