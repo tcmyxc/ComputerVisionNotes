@@ -1,0 +1,9 @@
+cifar-10:
+  model:
+    in_channels: 3
+    num_classes: 10
+
+cifar-100:
+  model:
+    in_channels: 3
+    num_classes: 100

@@ -7,8 +7,8 @@
 ```tex
 miniconda 或者 venv（创建虚拟环境）
 python 3.7+
-pytorch 1.11.0
-torchvision 0.12.0
+pytorch 1.11.0+
+torchvision 0.12.0+
 ```
 
 导出依赖到文件
@@ -48,7 +48,7 @@ pip install -r requirements.txt
 - Vision Transformer
   - [论文地址](https://arxiv.org/abs/2010.11929)
   - [李沐&朱毅老师联合投稿的论文讲解](https://www.bilibili.com/video/BV15P4y137jb)
-  - [源码讲解 TODO]()
+  - 源码讲解
 - Swin Transformer
 - ConvNeXt
 
