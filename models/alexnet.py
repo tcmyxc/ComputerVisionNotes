@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 
-
 __all__ = ["AlexNet", "alexnet"]
 
 
@@ -42,7 +41,7 @@ class AlexNet(nn.Module):
         return x
 
 
-def alexnet(num_classes: int = 1000, dropout: float = 0.5) -> AlexNet:
+def alexnet(num_classes: int = 1000, dropout: float = 0.5, **kwargs) -> AlexNet:
     r"""AlexNet model architecture from the
     `"One weird trick..." <https://arxiv.org/abs/1404.5997>`_ paper.
     The required minimum input size of the model is 63x63.

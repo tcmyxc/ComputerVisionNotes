@@ -3,7 +3,6 @@ from typing import Union, List, Dict, Any, cast
 import torch
 import torch.nn as nn
 
-
 __all__ = [
     "VGG",
     "vgg11",
@@ -19,7 +18,7 @@ __all__ = [
 
 class VGG(nn.Module):
     def __init__(
-        self, features: nn.Module, num_classes: int = 1000, init_weights: bool = True, dropout: float = 0.5
+            self, features: nn.Module, num_classes: int = 1000, init_weights: bool = True, dropout: float = 0.5
     ) -> None:
         super().__init__()
         self.features = features
@@ -146,6 +145,7 @@ def vgg19_bn(**kwargs: Any) -> VGG:
     The required minimum input size of the model is 32x32.
     """
     return _vgg("E", True, **kwargs)
+
 
 if __name__ == '__main__':
     model = vgg16()

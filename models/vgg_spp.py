@@ -5,7 +5,6 @@ import torch.nn as nn
 
 from layers.spp_layer import spatial_pyramid_pooling
 
-
 __all__ = [
     "VGG",
     "vgg11",
@@ -21,7 +20,7 @@ __all__ = [
 
 class VGG(nn.Module):
     def __init__(
-        self, features: nn.Module, num_classes: int = 1000, init_weights: bool = True, dropout: float = 0.5
+            self, features: nn.Module, num_classes: int = 1000, init_weights: bool = True, dropout: float = 0.5
     ) -> None:
         super().__init__()
         self.features = features
@@ -150,6 +149,6 @@ def vgg19_bn(**kwargs: Any) -> VGG:
 
 if __name__ == '__main__':
     from torchsummary import summary
+
     model = vgg16().cuda()
     print(summary(model, (3, 96, 96)))
-    
