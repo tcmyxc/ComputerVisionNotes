@@ -1,20 +1,22 @@
 import argparse
 import datetime
 import os
+import os.path as osp
+import time
 
 import torch
 from torch import nn
 from torch import optim
 
-from dataloaders import cifar, stl10
+from dataloaders import cifar
 from models.vgg import vgg16
 from utils.general import init_seeds, draw_lr, draw_acc_and_loss, get_current_time
-from utils.logger import Logger
+from utils.logging import get_root_logger
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu_id', type=str, default='0')
 
-logger = Logger()
+
 
 
 class CFG():
@@ -32,6 +34,7 @@ class CFG():
 
 
 def train(dataloader, model, loss_fn, optimizer, cfg, device, print_step=10):
+    logger = get_root_logger()
     size = len(dataloader.dataset)
     num_batches = len(dataloader)
     model.train()
@@ -62,6 +65,7 @@ def train(dataloader, model, loss_fn, optimizer, cfg, device, print_step=10):
 
 
 def test(dataloader, model, loss_fn, cfg, device, print_step=10):
+    logger = get_root_logger()
     size = len(dataloader.dataset)
     num_batches = len(dataloader)
     model.eval()
@@ -104,6 +108,7 @@ def update_best_model(cfg, model_state, model_name):
     Args:
         cfg: must have `result_path` and `best_model_path` attributes
     """
+    logger = get_root_logger()
     cp_path = os.path.join(cfg.result_path, model_name)
 
     if cfg.best_model_path is not None:
@@ -126,6 +131,10 @@ def main():
     cfg.result_path = os.path.join(os.getcwd(), "work_dir", get_current_time())
     if not os.path.exists(cfg.result_path):
         os.makedirs(cfg.result_path)
+    # init the logger before other steps
+    timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
+    log_file = osp.join(cfg.result_path, f'{timestamp}.log')
+    logger = get_root_logger(log_file=log_file)
     logger.info(f"result_path: {cfg.result_path}")
 
     # Get cpu or gpu device for training.
@@ -133,12 +142,12 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     logger.info(f"[INFO] using {device} device")
 
-    batch_size = 128
+    batch_size = 8
     epochs = 200
 
     # Create data loaders.
-    train_dataloader = cifar.get10(batch_size, "E:/dataset", train=True, val=False)
-    test_dataloader = cifar.get10(batch_size, "E:/dataset", train=False, val=True)
+    train_dataloader = cifar.get10(batch_size, "D:/dataset", train=True, val=False)
+    test_dataloader = cifar.get10(batch_size, "D:/dataset", train=False, val=True)
 
     model = vgg16().to(device)  # 79.18
     # model = vgg_spp16().to(device)  # [1, 2, 4]==>79.29, 79.76%, [1, 2, 4, 5]==>78.54, [1, 2, 3, 4]==>79.12%
